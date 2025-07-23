@@ -19,12 +19,12 @@ class ram_coverage extends  uvm_component;
          bins set_rd_op = {2'b10};
          bins read_mem = {2'b11};}
          o:coverpoint seq_item.rst_n;
-    	// e:cross a,f,d iff (seq_item.rst_n){
-    	// illegal_bins q=binsof(f.set_wr_op)&&binsof(a)intersect{1}&&binsof(d)intersect{1};
-    	// illegal_bins t=binsof(f.write_mem)&&binsof(a)intersect{1}&&binsof(d)intersect{1};
-    	// illegal_bins i=binsof(f.set_rd_op)&&binsof(a)intersect{1}&&binsof(d)intersect{1};
-    	// illegal_bins po=binsof(f.read_mem)&&binsof(a)intersect{1}&&binsof(d)intersect{0};
-    	// }
+    	e:cross a,f,d iff (seq_item.rst_n){
+    	illegal_bins q=binsof(f.set_wr_op)&&binsof(a)intersect{1}&&binsof(d)intersect{1};
+    	illegal_bins t=binsof(f.write_mem)&&binsof(a)intersect{1}&&binsof(d)intersect{1};
+    	illegal_bins i=binsof(f.set_rd_op)&&binsof(a)intersect{1}&&binsof(d)intersect{1};
+    	illegal_bins po=binsof(f.read_mem)&&binsof(a)intersect{1}&&binsof(d)intersect{0};
+    	}
     endgroup : cg
 
     function  new(string name="ram_coverage",uvm_component parent=null);
