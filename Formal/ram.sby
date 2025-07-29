@@ -1,0 +1,16 @@
+[options]
+mode cover
+mode bmc
+depth 100
+
+[engines]
+smtbmc --keep-going 
+
+
+[script]
+read -formal RAM.sv
+prep  -top ram
+
+
+[files]
+RAM.sv
