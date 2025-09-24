@@ -15,20 +15,21 @@ class spi_driver extends  uvm_driver #(spi_seq_item);
 		forever begin
 			seq_item=spi_seq_item::type_id::create("seq_item");
 			seq_item_port.get_next_item(seq_item);
-			for(int i=0; i<11;i++)begin 
-             spi_if.MOSI=seq_item.container[10-i];
+			for(int i=0; i<10;i++)begin 
+             spi_if.MOSI=seq_item.container[9-i];
              spi_if.SS_n=seq_item.SS_n;
              spi_if.rst_n=seq_item.rst_n;
              spi_if.container=seq_item.container;
-             @(negedge spi_if.clk);end 
-             if(seq_item.container[10:8]==3'b111)begin
+             @(negedge spi_if.clk);
+           end 
+             if(seq_item.container[9:8]==2'b11)begin
              	repeat(12)begin
              	@(negedge spi_if.clk);
              end
              end
              @(negedge spi_if.clk);
              seq_item.SS_n=1;
-             spi_if.MOSI=seq_item.container[10];
+             spi_if.MOSI=seq_item.container[9];
                spi_if.SS_n=seq_item.SS_n;
              spi_if.rst_n=seq_item.rst_n;
              spi_if.container=seq_item.container;
