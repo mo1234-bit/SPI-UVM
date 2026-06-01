@@ -370,16 +370,6 @@ vlog -sv spi_pkg.sv ram_pkg.sv spi_top_tb.sv
 vsim -c work.spi_top_tb -do "run -all"
 ```
 
----
-
-### Run Regression
-
-```tcl
-vsim -do regress.do
-```
-
----
-
 ### Run RAM Formal Verification
 
 ```bash
