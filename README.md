@@ -4,6 +4,8 @@
 This project implements a **Universal Verification Methodology (UVM)** environment for verifying an **SPI (Serial Peripheral Interface) Slave module** integrated with a **512x8 RAM controller**.  
 The verification framework ensures compliance with the SPI protocol, correctness of memory operations, and seamless integration between the SPI slave and RAM components.
 
+<img width="631" height="632" alt="Untitled Diagram drawio (1)" src="https://github.com/user-attachments/assets/a7e242c4-e194-4dac-bdff-35c46383901f" />
+
 The environment leverages:
 - **Constraint-random verification**
 - **Coverage-driven verification**
