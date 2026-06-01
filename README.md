@@ -4,6 +4,7 @@ This project implements a UVM-based verification environment for an SPI slave mo
 
 The verification framework combines constrained-random stimulus, scoreboard-based checking, functional/code/assertion coverage, SystemVerilog Assertions, a C reference model integrated through DPI-C, and formal verification of the RAM module using Yosys/SymbiYosys.
 
+## UVM architecture 
 <img width="631" height="632" alt="SPI UVM Architecture" src="https://github.com/user-attachments/assets/a7e242c4-e194-4dac-bdff-35c46383901f" />
 
 ---
