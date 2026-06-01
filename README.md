@@ -390,62 +390,56 @@ sby -f ram.sby
 ## Repository Structure
 
 ```text
-SPI-Verification/
-├── rtl/
-│   ├── spi_slave.sv
-│   ├── RAM.sv
-│   └── spi_ram_top.sv
+SPI-UVM/
+├── SPI_UVM/                    # SPI slave UVM verification environment
+│   ├── SPI.v                   # SPI slave RTL
+│   ├── spi_if.sv               # SPI interface
+│   ├── spi_seq_item.sv         # SPI sequence item
+│   ├── spi_sequencer.sv        # SPI sequencer
+│   ├── spi_driver.sv           # SPI driver
+│   ├── spi_monitor.sv          # SPI monitor
+│   ├── spi_agent.sv            # SPI agent
+│   ├── spi_scoreboard.sv       # SPI scoreboard
+│   ├── spi_coverage.sv         # SPI coverage
+│   ├── spi_env.sv              # SPI environment
+│   └── spi_test.sv             # SPI test
 │
-├── uvm/
-│   ├── spi_agent/
-│   │   ├── spi_seq_item.sv
-│   │   ├── spi_sequencer.sv
-│   │   ├── spi_driver.sv
-│   │   ├── spi_monitor.sv
-│   │   └── spi_agent.sv
-│   │
-│   ├── ram_agent/
-│   │   ├── ram_seq_item.sv
-│   │   ├── ram_driver.sv
-│   │   ├── ram_monitor.sv
-│   │   └── ram_agent.sv
-│   │
-│   ├── env/
-│   │   ├── spi_env.sv
-│   │   ├── ram_scoreboard.sv
-│   │   └── ram_coverage.sv
-│   │
-│   └── tests/
-│       ├── spi_base_test.sv
-│       ├── spi_write_test.sv
-│       ├── spi_read_test.sv
-│       └── spi_random_test.sv
+├── RAM_UVM/                    # RAM UVM verification environment
+│   ├── RAM.sv                  # RAM RTL
+│   ├── ram_if.sv               # RAM interface
+│   ├── ram_seq_item.sv         # RAM sequence item
+│   ├── ram_driver.sv           # RAM driver
+│   ├── ram_monitor.sv          # RAM monitor
+│   ├── ram_agent.sv            # RAM agent
+│   ├── ram_scoreboard.sv       # RAM scoreboard with DPI-C golden model
+│   ├── ram_coverage.sv         # RAM coverage
+│   ├── ram_env.sv              # RAM environment
+│   ├── ram_test.sv             # RAM test
+│   ├── ram.c                   # C golden reference model
+│   └── ram_sva.sv              # SVA formal properties
 │
-├── ref_model/
-│   ├── ram_model.c
-│   └── dpi_wrapper.sv
-│
-├── assertions/
-│   └── spi_sva.sv
-│
-├── formal/
-│   ├── RAM.sv
-│   └── ram.sby
-
+└── Formal/                     # SymbiYosys formal verification
+    ├── RAM.sv                  # RAM module with formal properties
+    └── ram.sby                 # SymbiYosys configuration
 ```
 
 ---
 
-## Key Insights
+## Engineering Insights
 
-- Protocol-aware constraints are essential for generating realistic SPI traffic.
-- A DPI-C golden model enables scalable automatic checking.
-- Scoreboard-based verification is more reliable than manual waveform inspection.
-- Coverage-driven verification helps expose missing protocol scenarios.
-- Randomized testing can reveal subtle control bugs that directed tests may miss.
-- Formal verification is useful for proving focused control properties on smaller modules such as RAM.
-- Modular UVM agents make the environment reusable for future protocol/IP verification projects.
+- The `rx_valid` bug showed why checking only final read/write data is not enough. The RAM contents could still look correct in some directed tests, while the command-valid behavior was wrong at the interface level. Monitoring control signals in the scoreboard and assertions made the bug visible.
 
+- The dual-agent architecture was necessary because the SPI pins and RAM interface operate at different abstraction levels. The SPI agent verifies serial protocol behavior, while the RAM agent observes decoded command-level behavior. Separating them made debugging much easier when a serial transaction produced an incorrect memory-side action.
+
+- The C/DPI-C golden model was most useful for removing manual waveform judgment. Instead of visually checking whether each RAM operation was correct, the scoreboard compared the DUT against an independent reference model during simulation.
+
+- Constrained-random testing exposed behavior that directed tests could easily miss, especially sequences where write-address, write-data, read-address, and read-data commands occur back-to-back in different orders.
+
+- The `tx_valid` and `rx_valid` signals became the most important control points in the environment. Most integration bugs appeared around when data was considered valid, not around the memory array itself.
+
+- Formal verification was useful for the RAM block because its control behavior is small enough to prove directly. The SymbiYosys run helped check reset behavior, command decoding, address-register updates, and `tx_valid` behavior independently from the full UVM environment.
+
+- The biggest lesson from this project was that protocol verification is not only about checking data correctness. It also requires checking transaction timing, valid-signal behavior, FSM transitions, and interface-level assumptions.
 ---
 
 ## Limitations and Future Work
@@ -460,12 +454,6 @@ SPI-Verification/
 
 ---
 
-## Author
-
-**Mohamed Gamal**  
-Completed: July 2025
-
----
 
 ## Keywords
 
