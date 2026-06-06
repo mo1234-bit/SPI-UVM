@@ -414,8 +414,9 @@ SPI-UVM/
 |   ├── Pass.jpeg               # picture of testing
 |   ├── RAM.sv                  # RAM module with formal properties
 |   └── ram.sby                 # SymbiYosys configuration
-├── reports/                   # Questa report
-│   ── Coverage_rpt.txt
+|
+├── reports/                   
+│   ── Coverage_rpt.txt         # Questa report
 
 ```
 
