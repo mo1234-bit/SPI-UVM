@@ -240,6 +240,7 @@ Functional coverage includes:
 
 ## Coverage Summary
 
+|---|---:|
 | Functional Coverage | 100% |
 | Statement Coverage  | 100% |
 | Branch Coverage     | 100% |
