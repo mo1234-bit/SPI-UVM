@@ -240,6 +240,7 @@ Functional coverage includes:
 
 ## Coverage Summary
 
+| Metric | Result |
 |---|---:|
 | Functional Coverage | 100% |
 | Statement Coverage  | 100% |
