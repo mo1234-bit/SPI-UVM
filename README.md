@@ -238,6 +238,16 @@ Functional coverage includes:
 
 ---
 
+## Coverage Summary
+
+Functional Coverage : 100%
+Statement Coverage  : 100%
+Branch Coverage     : 100%
+Toggle Coverage     : 100%
+FSM State Coverage  : 100%
+FSM Transition Coverage : 100%
+
+---
 ## Bugs Found
 
 ### `rx_valid` Protocol Bug
