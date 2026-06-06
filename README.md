@@ -411,8 +411,12 @@ SPI-UVM/
 │   └── ram_sva.sv              # SVA formal properties
 │
 └── Formal/                     # SymbiYosys formal verification
-    ├── RAM.sv                  # RAM module with formal properties
-    └── ram.sby                 # SymbiYosys configuration
+|   ├── Pass.jpeg               # picture of testing
+|   ├── RAM.sv                  # RAM module with formal properties
+|   └── ram.sby                 # SymbiYosys configuration
+├── reports/                   # Questa report
+│   ── Coverage_rpt.txt
+
 ```
 
 ---
